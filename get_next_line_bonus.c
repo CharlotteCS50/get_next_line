@@ -6,7 +6,7 @@
 /*   By: cschnath <cschnath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 23:09:35 by cschnath          #+#    #+#             */
-/*   Updated: 2024/10/22 23:25:38 by cschnath         ###   ########.fr       */
+/*   Updated: 2024/10/23 00:05:47 by cschnath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,38 +96,47 @@ char	*ft_read_file_bonus(int fd, char *buf)
 
 char	*get_next_line_bonus(int fd)
 {
-	static char	*buf;
+	static char	*buf[256];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buf = ft_read_file_bonus(fd, buf);
-	if (!buf)
+	buf[fd] = ft_read_file_bonus(fd, buf[fd]);
+	if (!buf[fd])
 		return (NULL);
-	line = ft_second_function_bonus(buf);
-	buf = ft_clean_buffer_bonus(buf);
-	if (!buf)
+	line = ft_second_function_bonus(buf[fd]);
+	buf[fd] = ft_clean_buffer_bonus(buf[fd]);
+	if (!buf[fd])
 	{
-		free(buf);
-		buf = NULL;
+		free(buf[fd]);
+		buf[fd] = NULL;
 	}
 	return (line);
 }
 
-/*
+
 int	main(void)
 {
-	int		fd;
-	char	*next_line;
+	int		fd1;
+    int     fd2;
+    int     fd3;
+	char	*test1;
+    char    *test2;
+    char    *test3;
 	int		line_count;
 
-	fd = open("test.txt", O_RDONLY);
+	fd1 = open("test.txt", O_RDONLY);
+    fd2 = open("test2.txt", O_RDONLY);
+    fd3 = open("test3.txt", O_RDONLY);
 	line_count = 0;
-	while ((next_line = get_next_line_bonus(fd)) != NULL)
-	{
-		printf("Line %d: %s", ++line_count, next_line);
-		free(next_line);
-	}
+	test1 = get_next_line_bonus(fd1);
+    test2 = get_next_line_bonus(fd2);
+    test3 = get_next_line_bonus(fd3);
+	printf("Line %d: %s", ++line_count, test1);
+    printf("Line %d: %s", ++line_count, test2);
+    printf("Line %d: %s", ++line_count, test3);
+	free(test1);
+    free(test2);
+    free(test3);
 	return (0);
 }
-*/
