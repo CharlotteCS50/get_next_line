@@ -6,13 +6,25 @@
 /*   By: cschnath <cschnath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 00:18:42 by cschnath          #+#    #+#             */
-/*   Updated: 2024/10/22 18:42:02 by cschnath         ###   ########.fr       */
+/*   Updated: 2024/10/22 23:02:55 by cschnath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
+size_t	ft_strlen(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	*ft_strchr(char *s, int c)
 {
 	int	i;
 
@@ -23,47 +35,49 @@ char	*ft_strchr(const char *s, int c)
 		return ((char *)&s[ft_strlen(s)]);
 	while (s[i] != '\0')
 	{
-		if (s[i] == (char)c)
+		if (s[i] == (char) c)
 			return ((char *)&s[i]);
 		i++;
 	}
 	return (NULL);
 }
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	len;
-
-	if (!s)
-		return (0);
-	len = 0;
-	while (s[len] != '\0')
-		len++;
-	return (len);
-}
-
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char *new;
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
-	i = 0;
-	j = 0;
 	if (!s1)
-		s1 = (char *)malloc(sizeof(char));
+		s1 = (char *)ft_calloc(1, sizeof(char));
 	if (!s1 || !s2)
 		return (NULL);
-	new = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
-	if (new == NULL)
+	str = ft_calloc(((ft_strlen(s1) + ft_strlen(s2)) + 1), sizeof(char));
+	if (str == NULL)
 		return (NULL);
-	while (i < ft_strlen(s1))
+	i = -1;
+	j = 0;
+	if (s1)
+		while (s1[++i] != '\0')
+			str[i] = s1[i];
+	while (s2[j] != '\0')
+		str[i++] = s2[j++];
+	return (free(s1), str);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	char	*ptr;
+	size_t	i;
+
+	i = 0;
+	ptr = malloc(count * size);
+	if (!ptr)
+		return (NULL);
+	while (i < count * size)
 	{
-		new[i] = s1[i];
+		((char *)ptr)[i] = 0;
 		i++;
 	}
-	while (j < ft_strlen(s2))
-		new[i++] = s2[j++];
-	new[i] = '\0';
-	return (free(s1), new);
+	return (ptr);
 }

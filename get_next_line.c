@@ -6,7 +6,7 @@
 /*   By: cschnath <cschnath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 00:18:16 by cschnath          #+#    #+#             */
-/*   Updated: 2024/10/22 19:00:11 by cschnath         ###   ########.fr       */
+/*   Updated: 2024/10/22 23:02:40 by cschnath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*ft_clean_buffer(char *buf)
 	int		j;
 
 	i = 0;
-	j = 0;
 	while (buf[i] && buf[i] != '\n')
 		i++;
 	if (!buf[i])
@@ -42,40 +41,40 @@ char	*ft_clean_buffer(char *buf)
 		free(buf);
 		return (NULL);
 	}
-	tmp = malloc(sizeof(char) * (ft_strlen(buf) - i + 1));
+	tmp = ft_calloc((ft_strlen(buf) - i + 1), sizeof(char));
 	if (!tmp)
 		return (NULL);
 	i++;
+	j = 0;
 	while (buf[i])
 		tmp[j++] = buf[i++];
-	tmp[j] = '\0';
 	free(buf);
 	return (tmp);
 }
 
 char	*ft_second_function(char *buf)
 {
-	int		i;
+	int		j;
 	char	*tmp;
 
-	i = 0;
-	if (!buf[i])
+	j = 0;
+	if (!buf[j])
 		return (NULL);
-	while (buf[i] && buf[i] != '\n') 
-		i++;
-	tmp = malloc(sizeof(char) * (i + 2));
+	while (buf[j] && buf[j] != '\n')
+		j++;
+	tmp = ft_calloc((j + 2), sizeof(char));
 	if (!tmp)
 		return (NULL);
-	i = 0;
-	while (buf[i] && buf[i] != '\n')
+	j = 0;
+	while (buf[j] && buf[j] != '\n')
 	{
-		tmp[i] = buf[i];
-		i++;
+		tmp[j] = buf[j];
+		j++;
 	}
-	if (buf[i] == '\n')
+	if (buf[j] == '\n')
 	{
-		tmp[i] = buf[i];
-		i++;
+		tmp[j] = buf[j];
+		j++;
 	}
 	return (tmp);
 }
@@ -85,15 +84,13 @@ char	*ft_read_file(int fd, char *buf)
 	char	*tmp;
 	int		i;
 
-	i = 1;
-	tmp = malloc(sizeof(char) * (BUFFER_SIZE + 2));
+	tmp = ft_calloc((BUFFER_SIZE + 2), sizeof(char));
 	if (!tmp)
 		return (NULL);
+	i = 1;
 	while (!(ft_strchr(buf, '\n')) && i != 0)
 	{
 		i = read(fd, tmp, BUFFER_SIZE);
-		if (i == 0)
-			return(free(tmp), free(buf), NULL);
 		if (i == -1)
 		{
 			if (buf != NULL)
@@ -119,9 +116,14 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = ft_second_function(buf);
 	buf = ft_clean_buffer(buf);
+	if (!buf)
+	{
+		free(buf);
+		buf = NULL;
+	}
 	return (line);
 }
-
+/*
 int	main(void)
 {
 	int		fd;
@@ -137,3 +139,4 @@ int	main(void)
 	}
 	return (0);
 }
+*/
