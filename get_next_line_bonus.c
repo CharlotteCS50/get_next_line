@@ -6,7 +6,7 @@
 /*   By: cschnath <cschnath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 23:09:35 by cschnath          #+#    #+#             */
-/*   Updated: 2024/10/23 21:12:26 by cschnath         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:15:45 by cschnath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	int		fd1;
 	int     fd2;
@@ -142,3 +142,4 @@ int	main(void)
 	free(test3);
 	return (0);
 }
+ */
