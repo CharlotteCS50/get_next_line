@@ -6,7 +6,7 @@
 /*   By: cschnath <cschnath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 00:18:16 by cschnath          #+#    #+#             */
-/*   Updated: 2024/10/22 23:23:20 by cschnath         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:36:25 by cschnath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ Fd			Name				<unistd.h>			<stdio.h>
 1		Standard Output    STDOUT_FILENO	stdout
 2		Standard Error		STDERR_FILENO	stderr
 
-gcc -Wall -Werror -Wextra -D BUFFER_SIZE=300 get_next_line.c get_next_line_utils.c
+gcc -Wall -Werror -Wextra -D BUFFER_SIZE=300
+get_next_line.c get_next_line_utils.c
+
 valgrind --leak-check=full ./a.out
 
 Return 1 when a line has been read, 0 when EOF has been
