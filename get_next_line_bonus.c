@@ -6,12 +6,12 @@
 /*   By: cschnath <cschnath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 23:09:35 by cschnath          #+#    #+#             */
-/*   Updated: 2024/10/23 18:42:32 by cschnath         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:12:26 by cschnath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-gcc -Wall -Werror -Wextra -D BUFFER_SIZE=300
+gcc -g -Wall -Werror -Wextra -D BUFFER_SIZE=300
 get_next_line_bonus.c get_next_line_utils_bonus.c
 
 valgrind --leak-check=full ./a.out
@@ -35,7 +35,7 @@ char	*ft_clean_buffer(char *buf)
 	}
 	tmp = ft_calloc((ft_strlen(buf) - i + 1), sizeof(char));
 	if (!tmp)
-		return (NULL);
+		return (free(tmp), NULL);
 	i++;
 	j = 0;
 	while (buf[i])
@@ -101,7 +101,7 @@ char	*ft_read_file(int fd, char *buf)
 
 char	*get_next_line(int fd)
 {
-	static char	*buf[256];
+	static char	*buf[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -114,33 +114,31 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/*
 int	main(void)
 {
 	int		fd1;
-    int     fd2;
-    int     fd3;
+	int     fd2;
+	int     fd3;
 	char	*test1;
-    char    *test2;
-    char    *test3;
+	char    *test2;
+	char    *test3;
 	int		line_count;
 
 	fd1 = open("test.txt", O_RDONLY);
-    fd2 = open("test2.txt", O_RDONLY);
-    fd3 = open("test3.txt", O_RDONLY);
+	fd2 = open("test2.txt", O_RDONLY);
+	fd3 = open("test3.txt", O_RDONLY);
 	line_count = 0;
 	test1 = get_next_line(fd1);
-    test2 = get_next_line(fd2);
-    test3 = get_next_line(fd3);
+	test2 = get_next_line(fd2);
+	test3 = get_next_line(fd3);
 	printf("Line %d: %s", ++line_count, test1);
-    printf("Line %d: %s", ++line_count, test2);
-    printf("Line %d: %s", ++line_count, test3);
+	printf("Line %d: %s", ++line_count, test2);
+	printf("Line %d: %s", ++line_count, test3);
 	close(fd1);
 	close(fd2);
 	close(fd3);
 	free(test1);
-    free(test2);
-    free(test3);
+	free(test2);
+	free(test3);
 	return (0);
 }
-*/

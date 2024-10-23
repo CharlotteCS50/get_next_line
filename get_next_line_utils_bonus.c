@@ -6,7 +6,7 @@
 /*   By: cschnath <cschnath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 23:10:08 by cschnath          #+#    #+#             */
-/*   Updated: 2024/10/23 15:59:42 by cschnath         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:04:40 by cschnath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	*ft_calloc(size_t count, size_t size)
 	i = 0;
 	ptr = malloc(count * size);
 	if (!ptr)
-		return (NULL);
+		return (free(ptr), NULL);
 	while (i < count * size)
 	{
 		((char *)ptr)[i] = 0;
